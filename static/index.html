@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Go Reloaded</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>Go Reloaded</h1>
+    <p class="subtitle">Fixes articles, converts number bases, adjusts case, and cleans up punctuation and quotes.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <label for="input">Input</label>
+      <textarea id="input" placeholder="e.g. Ready, set, go (up, 2)! 1E (hex) files were found."></textarea>
+    </section>
+
+    <div class="actions">
+      <button id="processBtn">Process →</button>
+      <span id="status" class="status"></span>
+    </div>
+
+    <section class="panel">
+      <label for="output">Output</label>
+      <textarea id="output" readonly placeholder="Result will appear here..."></textarea>
+      <button id="copyBtn" class="secondary">Copy</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>Each result is also written to <code>output.txt</code> in the project folder.</p>
+  </footer>
+
+</div>
+
+<script>
+  const input = document.getElementById('input');
+  const output = document.getElementById('output');
+  const processBtn = document.getElementById('processBtn');
+  const copyBtn = document.getElementById('copyBtn');
+  const status = document.getElementById('status');
+
+  processBtn.addEventListener('click', async () => {
+    const text = input.value;
+    status.textContent = 'Processing...';
+    output.value = '';
+
+    try {
+      const res = await fetch('/process', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      });
+      const data = await res.json();
+
+      if (!res.ok || data.error) {
+        status.textContent = data.error || 'Something went wrong.';
+        return;
+      }
+
+      output.value = data.result;
+      status.textContent = 'Done.';
+    } catch (err) {
+      status.textContent = 'Could not reach the server.';
+    }
+  });
+
+  copyBtn.addEventListener('click', () => {
+    if (!output.value) return;
+    navigator.clipboard.writeText(output.value);
+    status.textContent = 'Copied.';
+  });
+</script>
+</body>
+</html>
