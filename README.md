@@ -40,7 +40,7 @@ The web UI puts a browser front end on top of the same transformation engine use
 
 ```bash
 git clone <repo-url>
-cd go-reloaded-final
+cd cli-text-correction-tool
 go run .
 ```
 
