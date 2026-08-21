@@ -1,10 +1,10 @@
-# Go Reloaded-final
+# cli text correction tool
 
 A text-transformation engine written in Go, now wrapped in a simple web interface so you can run every supported conversion from the browser instead of the command line.
 
 ## Overview
 
-Go Reloaded reads raw text and applies a set of inline transformation rules — number base conversions, case changes, punctuation cleanup, and grammar fixes — producing a correctly formatted output string. The original version worked as a CLI file-processing pipeline; this version adds an HTTP server and HTML form so the same engine can be used interactively.
+Go Reloaded reads raw text and applies a set of inline transformation rules, number base conversions, case changes, punctuation cleanup, and grammar fixes, producing a correctly formatted output string. The original version worked as a CLI file-processing pipeline; this version adds an HTTP server and HTML form so the same engine can be used interactively.
 
 ## Features / Supported Conversions
 
