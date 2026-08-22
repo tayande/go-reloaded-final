@@ -61,7 +61,7 @@ func main() {
 	runServer()
 }
 
-// ---------- CLI mode (unchanged behavior) ----------
+// CLI mode
 
 func runCLI(inputFile, outputFile string) {
 	if inputFile == outputFile {
@@ -90,7 +90,7 @@ func runCLI(inputFile, outputFile string) {
 	fmt.Fprintf(os.Stdout, "Done. Output written into %s\n", outputFile)
 }
 
-// ---------- Web mode ----------
+// Web mode
 
 type processRequest struct {
 	Text string `json:"text"`
@@ -147,7 +147,7 @@ func handleProcess(w http.ResponseWriter, r *http.Request) {
 
 	result := processor(req.Text)
 
-	// Also write to output.txt so the result shows up on disk (e.g. in VS Code)
+	// Also write to output.txt
 	// at the same time it's shown on the web page.
 	if err := os.WriteFile("output.txt", []byte(result), 0644); err != nil {
 		fmt.Fprintln(os.Stderr, "Warning: could not write output.txt:", err)
